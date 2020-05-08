@@ -1396,7 +1396,7 @@ Value* EnableRebootFn(const char* name, State* state, const std::vector<std::uni
   return StringValue("t");
 }
 
-Value* Tune2FsFn(const char* name, State* state, const std::vector<std::unique_ptr<Expr>>& /*argv*/) {
+Value* Tune2FsFn(const char* name, State* state, const std::vector<std::unique_ptr<Expr>>& argv) {
 #ifdef HAVE_LIBTUNE2FS
   if (argv.empty()) {
     return ErrorAbort(state, kArgsParsingFailure, "%s() expects args, got %zu", name, argv.size());
@@ -1425,7 +1425,7 @@ Value* Tune2FsFn(const char* name, State* state, const std::vector<std::unique_p
   }
   return StringValue("t");
 #else
-  return ErrorAbort(state, kTune2FsFailure, "%s() support not present, no libtune2fs", name);
+  return ErrorAbort(state, kTune2FsFailure, "%s() support not present, no libtune2fs to process %zu args", name, argv.size());
 #endif // HAVE_LIBTUNE2FS
 }
 
